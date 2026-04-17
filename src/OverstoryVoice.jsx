@@ -58,6 +58,7 @@ export default function OverstoryVoice() {
   const innerRef = useRef(null);
   const stageRef = useRef(null);
   const prevInnerH = useRef(0);
+  const audioRef = useRef(new Audio(`${import.meta.env.BASE_URL}Ferry.m4a`));
 
   const clearTimeouts = () => {
     timeoutsRef.current.forEach(clearTimeout);
@@ -71,6 +72,9 @@ export default function OverstoryVoice() {
     prevInnerH.current = 0;
     setShowExport(false);
     setMode("replaying");
+    const audio = audioRef.current;
+    audio.currentTime = 0;
+    audio.play();
 
     SRT.forEach(({ start, text }, i) => {
       const t = setTimeout(() => {
