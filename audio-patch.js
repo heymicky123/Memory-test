@@ -26,7 +26,7 @@
     stage.dataset.gifPatched = "1";
 
     var wrap = document.createElement("div");
-    wrap.style.cssText = "margin-bottom:40px";
+    wrap.style.cssText = "margin-bottom:40px;background-color:#F2E7DA;padding:20px";
     var img = document.createElement("img");
     img.src = "https://raw.githubusercontent.com/heymicky123/Quick_test/claude/srt-subtitle-component-UzVua/Memory_test_ferry.gif";
     img.style.cssText = "width:100%;display:block";
