@@ -49,7 +49,7 @@ const SRT = [
   { start: 31845, text: "that way." },
 ];
 
-const PAGES = Array.from({ length: 12 });
+const PAGES = Array.from({ length: 18 });
 const CURRENT_PAGE = 4;
 
 export default function OverstoryVoice() {
@@ -227,14 +227,14 @@ export default function OverstoryVoice() {
         pointerEvents: "none", zIndex: 10,
       }}>
         <div style={{
-          width: "100%", maxWidth: "420px", padding: "0 32px 20px",
+          width: "100%", maxWidth: "420px", padding: "0 32px",
           boxSizing: "border-box", display: "flex",
           justifyContent: "space-between", alignItems: "flex-end",
         }}>
           {PAGES.map((_, i) => (
             <div key={i} style={{
               width: "1.5px", flexShrink: 0,
-              height: i === CURRENT_PAGE ? "20px" : "10px",
+              height: i === CURRENT_PAGE ? "40px" : "20px",
               backgroundColor: i === CURRENT_PAGE ? "#000000" : "#D4CCC2",
             }} />
           ))}
