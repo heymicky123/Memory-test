@@ -25,13 +25,19 @@
     if (!stage || stage.dataset.gifPatched) return;
     stage.dataset.gifPatched = "1";
 
+    // Add 40px horizontal padding to the content column
+    var col = stage.parentNode;
+    col.style.paddingLeft = "40px";
+    col.style.paddingRight = "40px";
+    col.style.boxSizing = "border-box";
+
     var wrap = document.createElement("div");
-    wrap.style.cssText = "margin-bottom:40px;background-color:#F2E7DA;padding:20px";
+    wrap.style.cssText = "margin-bottom:40px;background-color:#F2E7DA;padding:16px";
     var img = document.createElement("img");
     img.src = "https://raw.githubusercontent.com/heymicky123/Quick_test/claude/srt-subtitle-component-UzVua/Memory_test_ferry.gif";
     img.style.cssText = "width:100%;display:block";
     wrap.appendChild(img);
-    stage.parentNode.insertBefore(wrap, stage);
+    col.insertBefore(wrap, stage);
   }
 
   setTimeout(patch, 200);
