@@ -122,9 +122,9 @@ export default function OverstoryVoice() {
         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`,
       }} />
 
-      <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "420px", boxSizing: "border-box" }}>
+      <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "420px", boxSizing: "border-box", padding: "0 40px" }}>
 
-        <div style={{ marginBottom: "40px", backgroundColor: "#F2E7DA", padding: "20px" }}>
+        <div style={{ marginBottom: "40px", backgroundColor: "#F2E7DA", padding: "16px" }}>
           <img
             src={`${import.meta.env.BASE_URL}Memory_test_ferry.gif`}
             alt=""
