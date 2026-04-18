@@ -124,7 +124,7 @@ export default function OverstoryVoice() {
 
       <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "420px", boxSizing: "border-box" }}>
 
-        <div style={{ marginBottom: "40px" }}>
+        <div style={{ marginBottom: "40px", backgroundColor: "#F2E7DA", padding: "20px" }}>
           <img
             src={`${import.meta.env.BASE_URL}Memory_test_ferry.gif`}
             alt=""
