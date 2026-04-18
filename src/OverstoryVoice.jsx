@@ -177,7 +177,9 @@ export default function OverstoryVoice() {
             >
               {phrases.map((phrase, i) => {
                 const fromEnd = phrases.length - 1 - i;
-                const opacity = fromEnd > 6
+                const opacity = mode === "done"
+                  ? 1
+                  : fromEnd > 6
                   ? Math.max(0, 1 - (fromEnd - 6) * 0.15)
                   : 1;
                 const isNewest = i === phrases.length - 1 && mode === "replaying";
