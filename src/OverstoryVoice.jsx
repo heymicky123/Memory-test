@@ -57,6 +57,7 @@ export default function OverstoryVoice() {
   const timeoutsRef = useRef([]);
   const innerRef = useRef(null);
   const stageRef = useRef(null);
+  const doneScrollRef = useRef(null);
   const prevInnerH = useRef(0);
   const audioRef = useRef(new Audio(`${import.meta.env.BASE_URL}Ferry.m4a`));
 
@@ -99,6 +100,13 @@ export default function OverstoryVoice() {
     }
   }, [phrases]);
 
+  useEffect(() => {
+    if (mode === "done" && doneScrollRef.current) {
+      const el = doneScrollRef.current;
+      el.scrollTop = el.scrollHeight;
+    }
+  }, [mode]);
+
   useEffect(() => () => clearTimeouts(), []);
 
   const transcript = SRT.map(s => s.text).join(" ");
@@ -132,23 +140,41 @@ export default function OverstoryVoice() {
         </div>
 
         {mode === "done" ? (
-          <div style={{
-            maxHeight: "280px",
-            overflowY: "auto",
-            marginBottom: "56px",
-            fontSize: "19px",
-            color: "#000000",
-            lineHeight: 1.75,
-            wordBreak: "keep-all",
-            overflowWrap: "break-word",
-            padding: "4px 0 24px",
-            animation: "fadeUp 0.4s ease-out",
-          }}>
-            {phrases.map(phrase => (
-              <span key={phrase.id} style={{ display: "inline-block", marginRight: "0.28em" }}>
-                {phrase.text}
-              </span>
-            ))}
+          <div
+            ref={doneScrollRef}
+            className="done-scroll"
+            style={{
+              position: "relative",
+              height: "160px",
+              marginBottom: "56px",
+              overflowY: "auto",
+              scrollbarWidth: "none",
+            }}
+          >
+            <div style={{
+              position: "absolute", top: 0, left: 0, right: 0, height: "64px",
+              background: "linear-gradient(to bottom, #FCFBF8 30%, transparent 100%)",
+              zIndex: 2, pointerEvents: "none",
+            }} />
+            <div style={{
+              position: "absolute", bottom: 0, left: 0, right: 0, height: "48px",
+              background: "linear-gradient(to top, #FCFBF8 20%, transparent 100%)",
+              zIndex: 2, pointerEvents: "none",
+            }} />
+            <div style={{
+              fontSize: "19px",
+              color: "#000000",
+              lineHeight: 1.75,
+              wordBreak: "keep-all",
+              overflowWrap: "break-word",
+              paddingBottom: "32px",
+            }}>
+              {phrases.map(phrase => (
+                <span key={phrase.id} style={{ display: "inline-block", marginRight: "0.28em" }}>
+                  {phrase.text}
+                </span>
+              ))}
+            </div>
           </div>
         ) : (
           <div
@@ -273,6 +299,7 @@ export default function OverstoryVoice() {
 
       <style>{`
         * { word-break: keep-all; }
+        .done-scroll::-webkit-scrollbar { display: none; }
         @keyframes wordIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
