@@ -49,13 +49,12 @@ const SRT = [
   { start: 31845, text: "that way." },
 ];
 
-const PAGES = ["ferry", "page2", "page3"];
-const CURRENT_PAGE = 0;
+const PAGES = Array.from({ length: 12 });
+const CURRENT_PAGE = 4;
 
 export default function OverstoryVoice() {
   const [phrases, setPhrases] = useState([]);
   const [mode, setMode] = useState("idle");
-  const [showExport, setShowExport] = useState(false);
   const [offsetY, setOffsetY] = useState(0);
   const timeoutsRef = useRef([]);
   const innerRef = useRef(null);
@@ -73,7 +72,6 @@ export default function OverstoryVoice() {
     setPhrases([]);
     setOffsetY(0);
     prevInnerH.current = 0;
-    setShowExport(false);
     setMode("replaying");
     const audio = audioRef.current;
     audio.currentTime = 0;
@@ -104,8 +102,6 @@ export default function OverstoryVoice() {
 
   useEffect(() => () => clearTimeouts(), []);
 
-  const transcript = SRT.map(s => s.text).join(" ");
-
   return (
     <div style={{
       minHeight: "100vh",
@@ -125,7 +121,7 @@ export default function OverstoryVoice() {
         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`,
       }} />
 
-      <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "420px", boxSizing: "border-box", padding: "0 40px" }}>
+      <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "420px", boxSizing: "border-box", padding: "0 32px" }}>
 
         <div style={{ marginBottom: "40px", backgroundColor: "#F2E7DA", padding: "16px" }}>
           <img
@@ -156,7 +152,7 @@ export default function OverstoryVoice() {
           }} />
 
           {phrases.length === 0 && mode === "idle" && (
-            <div style={{ position: "absolute", bottom: "40px", left: 0, fontSize: "19px", color: "#C4B89A", fontStyle: "italic" }}>
+            <div style={{ position: "absolute", bottom: "40px", left: 0, fontSize: "17px", color: "#C4B89A", fontStyle: "italic" }}>
               Speak a memory…
             </div>
           )}
@@ -172,7 +168,7 @@ export default function OverstoryVoice() {
             <div
               ref={innerRef}
               style={{
-                fontSize: "19px",
+                fontSize: "17px",
                 color: "#000000",
                 lineHeight: 1.75,
                 wordBreak: "keep-all",
@@ -222,38 +218,7 @@ export default function OverstoryVoice() {
             Demo
           </button>
 
-          {mode === "done" && (
-            <button
-              onClick={() => setShowExport(v => !v)}
-              style={{
-                padding: "11px 22px", fontFamily: "Georgia, serif", fontSize: "13px", letterSpacing: "0.05em",
-                cursor: "pointer", marginLeft: "auto",
-                backgroundColor: "transparent", border: "1px solid #C4B89A", color: "#9B8E7E", transition: "all 0.15s",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.color = "#000000"; e.currentTarget.style.borderColor = "#000000"; }}
-              onMouseLeave={e => { e.currentTarget.style.color = "#9B8E7E"; e.currentTarget.style.borderColor = "#C4B89A"; }}
-            >
-              Export →
-            </button>
-          )}
         </div>
-
-        {showExport && (
-          <div style={{
-            marginTop: "40px", padding: "28px 32px",
-            backgroundColor: "#EDECE8", borderLeft: "2px solid #C4B89A",
-            animation: "fadeUp 0.3s ease-out",
-          }}>
-            <div style={{ fontSize: "10px", letterSpacing: "0.22em", textTransform: "uppercase", color: "#9B8E7E", marginBottom: "14px" }}>Transcript</div>
-            <p style={{ fontSize: "15px", color: "#000000", lineHeight: 1.9, margin: "0 0 20px", fontStyle: "italic" }}">\u201c{transcript}\u201d</p>
-            <button
-              onClick={() => navigator.clipboard.writeText(transcript)}
-              style={{ padding: "9px 20px", fontFamily: "Georgia, serif", fontSize: "12px", letterSpacing: "0.08em", cursor: "pointer", backgroundColor: "transparent", border: "1px solid #9B8E7E", color: "#000000" }}
-              onMouseEnter={e => e.currentTarget.style.backgroundColor = "#E5E3DE"}
-              onMouseLeave={e => e.currentTarget.style.backgroundColor = "transparent"}
-            >Copy</button>
-          </div>
-        )}
       </div>
 
       <div style={{
@@ -262,7 +227,7 @@ export default function OverstoryVoice() {
         pointerEvents: "none", zIndex: 10,
       }}>
         <div style={{
-          width: "100%", maxWidth: "420px", padding: "0 40px 20px",
+          width: "100%", maxWidth: "420px", padding: "0 32px 20px",
           boxSizing: "border-box", display: "flex",
           justifyContent: "space-between", alignItems: "flex-end",
         }}>
