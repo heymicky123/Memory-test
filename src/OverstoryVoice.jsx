@@ -49,6 +49,9 @@ const SRT = [
   { start: 31845, text: "that way." },
 ];
 
+const PAGES = ["ferry", "page2", "page3"];
+const CURRENT_PAGE = 0;
+
 export default function OverstoryVoice() {
   const [phrases, setPhrases] = useState([]);
   const [mode, setMode] = useState("idle");
@@ -242,7 +245,7 @@ export default function OverstoryVoice() {
             animation: "fadeUp 0.3s ease-out",
           }}>
             <div style={{ fontSize: "10px", letterSpacing: "0.22em", textTransform: "uppercase", color: "#9B8E7E", marginBottom: "14px" }}>Transcript</div>
-            <p style={{ fontSize: "15px", color: "#000000", lineHeight: 1.9, margin: "0 0 20px", fontStyle: "italic" }}>"{transcript}"</p>
+            <p style={{ fontSize: "15px", color: "#000000", lineHeight: 1.9, margin: "0 0 20px", fontStyle: "italic" }}">\u201c{transcript}\u201d</p>
             <button
               onClick={() => navigator.clipboard.writeText(transcript)}
               style={{ padding: "9px 20px", fontFamily: "Georgia, serif", fontSize: "12px", letterSpacing: "0.08em", cursor: "pointer", backgroundColor: "transparent", border: "1px solid #9B8E7E", color: "#000000" }}
@@ -251,6 +254,26 @@ export default function OverstoryVoice() {
             >Copy</button>
           </div>
         )}
+      </div>
+
+      <div style={{
+        position: "fixed", bottom: 0, left: 0, right: 0,
+        display: "flex", justifyContent: "center",
+        pointerEvents: "none", zIndex: 10,
+      }}>
+        <div style={{
+          width: "100%", maxWidth: "420px", padding: "0 40px 20px",
+          boxSizing: "border-box", display: "flex",
+          justifyContent: "space-between", alignItems: "flex-end",
+        }}>
+          {PAGES.map((_, i) => (
+            <div key={i} style={{
+              width: "1.5px", flexShrink: 0,
+              height: i === CURRENT_PAGE ? "20px" : "10px",
+              backgroundColor: i === CURRENT_PAGE ? "#000000" : "#D4CCC2",
+            }} />
+          ))}
+        </div>
       </div>
 
       <style>{`
