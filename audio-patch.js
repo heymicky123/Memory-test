@@ -9,10 +9,10 @@
   });
 
   function patch() {
-    // Remove Overstory header wrapper
+    // Remove Overstory header wrapper — match only the leaf text node
     var all = document.querySelectorAll("div");
     for (var i = 0; i < all.length; i++) {
-      if (all[i].textContent.trim() === "Overstory") {
+      if (all[i].children.length === 0 && all[i].textContent.trim() === "Overstory") {
         var wrapper = all[i].parentNode;
         if (wrapper) wrapper.parentNode.removeChild(wrapper);
         break;
@@ -34,6 +34,5 @@
     stage.parentNode.insertBefore(wrap, stage);
   }
 
-  // React renders after script runs — wait for DOM to settle
   setTimeout(patch, 200);
 })();
