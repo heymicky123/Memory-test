@@ -38,6 +38,26 @@
     img.style.cssText = "width:100%;display:block";
     wrap.appendChild(img);
     col.insertBefore(wrap, stage);
+
+    // Pagination indicator — fixed bottom, tick marks
+    if (!document.getElementById("ov-pagination")) {
+      var pages = [0, 1, 2];
+      var currentPage = 0;
+      var outer = document.createElement("div");
+      outer.id = "ov-pagination";
+      outer.style.cssText = "position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;pointer-events:none;z-index:10";
+      var inner = document.createElement("div");
+      inner.style.cssText = "width:100%;max-width:420px;padding:0 40px 20px;box-sizing:border-box;display:flex;justify-content:space-between;align-items:flex-end";
+      pages.forEach(function(_, i) {
+        var tick = document.createElement("div");
+        tick.style.cssText = "width:1.5px;flex-shrink:0;" +
+          "height:" + (i === currentPage ? "20px" : "10px") + ";" +
+          "background-color:" + (i === currentPage ? "#000000" : "#D4CCC2");
+        inner.appendChild(tick);
+      });
+      outer.appendChild(inner);
+      document.body.appendChild(outer);
+    }
   }
 
   setTimeout(patch, 200);
