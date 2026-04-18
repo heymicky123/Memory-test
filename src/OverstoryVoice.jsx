@@ -131,76 +131,95 @@ export default function OverstoryVoice() {
           <div style={{ width: "28px", height: "1px", backgroundColor: "#C4B89A" }} />
         </div>
 
-        <div
-          ref={stageRef}
-          style={{
-            position: "relative",
-            height: "160px",
+        {mode === "done" ? (
+          <div style={{
+            maxHeight: "280px",
+            overflowY: "auto",
             marginBottom: "56px",
-            overflow: "hidden",
-          }}
-        >
-          <div style={{
-            position: "absolute", top: 0, left: 0, right: 0, height: "64px",
-            background: "linear-gradient(to bottom, #FCFBF8 30%, transparent 100%)",
-            zIndex: 2, pointerEvents: "none",
-          }} />
-          <div style={{
-            position: "absolute", bottom: 0, left: 0, right: 0, height: "48px",
-            background: "linear-gradient(to top, #FCFBF8 20%, transparent 100%)",
-            zIndex: 2, pointerEvents: "none",
-          }} />
-
-          {phrases.length === 0 && mode === "idle" && (
-            <div style={{ position: "absolute", bottom: "40px", left: 0, fontSize: "19px", color: "#C4B89A", fontStyle: "italic" }}>
-              Speak a memory…
-            </div>
-          )}
-
-          <div style={{
-            position: "absolute",
-            bottom: "32px",
-            left: 0,
-            right: 0,
-            transform: `translateY(-${offsetY}px)`,
-            transition: "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
+            fontSize: "19px",
+            color: "#000000",
+            lineHeight: 1.75,
+            wordBreak: "keep-all",
+            overflowWrap: "break-word",
+            padding: "4px 0 24px",
+            animation: "fadeUp 0.4s ease-out",
           }}>
-            <div
-              ref={innerRef}
-              style={{
-                fontSize: "19px",
-                color: "#000000",
-                lineHeight: 1.75,
-                wordBreak: "keep-all",
-                overflowWrap: "break-word",
-              }}
-            >
-              {phrases.map((phrase, i) => {
-                const fromEnd = phrases.length - 1 - i;
-                const opacity = mode === "done"
-                  ? 1
-                  : fromEnd > 6
-                  ? Math.max(0, 1 - (fromEnd - 6) * 0.15)
-                  : 1;
-                const isNewest = i === phrases.length - 1 && mode === "replaying";
-                return (
-                  <span key={phrase.id} style={{
-                    display: "inline-block",
-                    opacity,
-                    transition: "opacity 1.4s ease",
-                    animation: isNewest ? "wordIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both" : undefined,
-                    marginRight: "0.28em",
-                  }}>
-                    {phrase.text}
-                  </span>
-                );
-              })}
-              {mode === "replaying" && (
-                <span style={{ display: "inline-block", width: "1.5px", height: "16px", backgroundColor: "#9B8E7E", marginLeft: "2px", verticalAlign: "middle", animation: "blink 1.1s ease-in-out infinite" }} />
-              )}
+            {phrases.map(phrase => (
+              <span key={phrase.id} style={{ display: "inline-block", marginRight: "0.28em" }}>
+                {phrase.text}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <div
+            ref={stageRef}
+            style={{
+              position: "relative",
+              height: "160px",
+              marginBottom: "56px",
+              overflow: "hidden",
+            }}
+          >
+            <div style={{
+              position: "absolute", top: 0, left: 0, right: 0, height: "64px",
+              background: "linear-gradient(to bottom, #FCFBF8 30%, transparent 100%)",
+              zIndex: 2, pointerEvents: "none",
+            }} />
+            <div style={{
+              position: "absolute", bottom: 0, left: 0, right: 0, height: "48px",
+              background: "linear-gradient(to top, #FCFBF8 20%, transparent 100%)",
+              zIndex: 2, pointerEvents: "none",
+            }} />
+
+            {phrases.length === 0 && mode === "idle" && (
+              <div style={{ position: "absolute", bottom: "40px", left: 0, fontSize: "19px", color: "#C4B89A", fontStyle: "italic" }}>
+                Speak a memory…
+              </div>
+            )}
+
+            <div style={{
+              position: "absolute",
+              bottom: "32px",
+              left: 0,
+              right: 0,
+              transform: `translateY(-${offsetY}px)`,
+              transition: "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
+            }}>
+              <div
+                ref={innerRef}
+                style={{
+                  fontSize: "19px",
+                  color: "#000000",
+                  lineHeight: 1.75,
+                  wordBreak: "keep-all",
+                  overflowWrap: "break-word",
+                }}
+              >
+                {phrases.map((phrase, i) => {
+                  const fromEnd = phrases.length - 1 - i;
+                  const opacity = fromEnd > 6
+                    ? Math.max(0, 1 - (fromEnd - 6) * 0.15)
+                    : 1;
+                  const isNewest = i === phrases.length - 1 && mode === "replaying";
+                  return (
+                    <span key={phrase.id} style={{
+                      display: "inline-block",
+                      opacity,
+                      transition: "opacity 1.4s ease",
+                      animation: isNewest ? "wordIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both" : undefined,
+                      marginRight: "0.28em",
+                    }}>
+                      {phrase.text}
+                    </span>
+                  );
+                })}
+                {mode === "replaying" && (
+                  <span style={{ display: "inline-block", width: "1.5px", height: "16px", backgroundColor: "#9B8E7E", marginLeft: "2px", verticalAlign: "middle", animation: "blink 1.1s ease-in-out infinite" }} />
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
           <button
