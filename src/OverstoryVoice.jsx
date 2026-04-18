@@ -54,7 +54,6 @@ export default function OverstoryVoice() {
   const [mode, setMode] = useState("idle");
   const [showExport, setShowExport] = useState(false);
   const [offsetY, setOffsetY] = useState(0);
-  const [doneAge, setDoneAge] = useState(0);
   const timeoutsRef = useRef([]);
   const innerRef = useRef(null);
   const stageRef = useRef(null);
@@ -72,7 +71,6 @@ export default function OverstoryVoice() {
     setOffsetY(0);
     prevInnerH.current = 0;
     setShowExport(false);
-    setDoneAge(0);
     setMode("replaying");
     const audio = audioRef.current;
     audio.currentTime = 0;
@@ -100,13 +98,6 @@ export default function OverstoryVoice() {
       setOffsetY(prev => Math.max(0, prev + delta - center));
     }
   }, [phrases]);
-
-  useEffect(() => {
-    if (mode !== "done") return;
-    if (doneAge >= 12) return;
-    const t = setTimeout(() => setDoneAge(a => a + 1), 280);
-    return () => clearTimeout(t);
-  }, [mode, doneAge]);
 
   useEffect(() => () => clearTimeouts(), []);
 
@@ -185,8 +176,10 @@ export default function OverstoryVoice() {
               }}
             >
               {phrases.map((phrase, i) => {
-                const fromEnd = (phrases.length - 1 - i) + doneAge;
-                const opacity = fromEnd > 6
+                const fromEnd = phrases.length - 1 - i;
+                const opacity = mode === "done"
+                  ? 1
+                  : fromEnd > 6
                   ? Math.max(0, 1 - (fromEnd - 6) * 0.15)
                   : 1;
                 const isNewest = i === phrases.length - 1 && mode === "replaying";
