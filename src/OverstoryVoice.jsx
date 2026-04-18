@@ -57,6 +57,7 @@ export default function OverstoryVoice() {
   const timeoutsRef = useRef([]);
   const innerRef = useRef(null);
   const stageRef = useRef(null);
+  const doneScrollRef = useRef(null);
   const prevInnerH = useRef(0);
   const audioRef = useRef(new Audio(`${import.meta.env.BASE_URL}Ferry.m4a`));
 
@@ -99,6 +100,13 @@ export default function OverstoryVoice() {
     }
   }, [phrases]);
 
+  useEffect(() => {
+    if (mode === "done" && doneScrollRef.current) {
+      const el = doneScrollRef.current;
+      el.scrollTop = el.scrollHeight;
+    }
+  }, [mode]);
+
   useEffect(() => () => clearTimeouts(), []);
 
   const transcript = SRT.map(s => s.text).join(" ");
@@ -131,76 +139,104 @@ export default function OverstoryVoice() {
           <div style={{ width: "28px", height: "1px", backgroundColor: "#C4B89A" }} />
         </div>
 
-        <div
-          ref={stageRef}
-          style={{
-            position: "relative",
-            height: "160px",
-            marginBottom: "56px",
-            overflow: "hidden",
-          }}
-        >
-          <div style={{
-            position: "absolute", top: 0, left: 0, right: 0, height: "64px",
-            background: "linear-gradient(to bottom, #FCFBF8 30%, transparent 100%)",
-            zIndex: 2, pointerEvents: "none",
-          }} />
-          <div style={{
-            position: "absolute", bottom: 0, left: 0, right: 0, height: "48px",
-            background: "linear-gradient(to top, #FCFBF8 20%, transparent 100%)",
-            zIndex: 2, pointerEvents: "none",
-          }} />
-
-          {phrases.length === 0 && mode === "idle" && (
-            <div style={{ position: "absolute", bottom: "40px", left: 0, fontSize: "19px", color: "#C4B89A", fontStyle: "italic" }}>
-              Speak a memory…
-            </div>
-          )}
-
-          <div style={{
-            position: "absolute",
-            bottom: "32px",
-            left: 0,
-            right: 0,
-            transform: `translateY(-${offsetY}px)`,
-            transition: "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
-          }}>
-            <div
-              ref={innerRef}
-              style={{
-                fontSize: "19px",
-                color: "#000000",
-                lineHeight: 1.75,
-                wordBreak: "keep-all",
-                overflowWrap: "break-word",
-              }}
-            >
-              {phrases.map((phrase, i) => {
-                const fromEnd = phrases.length - 1 - i;
-                const opacity = mode === "done"
-                  ? 1
-                  : fromEnd > 6
-                  ? Math.max(0, 1 - (fromEnd - 6) * 0.15)
-                  : 1;
-                const isNewest = i === phrases.length - 1 && mode === "replaying";
-                return (
-                  <span key={phrase.id} style={{
-                    display: "inline-block",
-                    opacity,
-                    transition: "opacity 1.4s ease",
-                    animation: isNewest ? "wordIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both" : undefined,
-                    marginRight: "0.28em",
-                  }}>
-                    {phrase.text}
-                  </span>
-                );
-              })}
-              {mode === "replaying" && (
-                <span style={{ display: "inline-block", width: "1.5px", height: "16px", backgroundColor: "#9B8E7E", marginLeft: "2px", verticalAlign: "middle", animation: "blink 1.1s ease-in-out infinite" }} />
-              )}
+        {mode === "done" ? (
+          <div
+            ref={doneScrollRef}
+            className="done-scroll"
+            style={{
+              height: "160px",
+              marginBottom: "56px",
+              overflowY: "auto",
+              scrollbarWidth: "none",
+              maskImage: "linear-gradient(to bottom, transparent 0%, black 38%, black 100%)",
+              WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 38%, black 100%)",
+            }}
+          >
+            <div style={{
+              fontSize: "19px",
+              color: "#000000",
+              lineHeight: 1.75,
+              wordBreak: "keep-all",
+              overflowWrap: "break-word",
+              paddingBottom: "32px",
+            }}>
+              {phrases.map(phrase => (
+                <span key={phrase.id} style={{ display: "inline-block", marginRight: "0.28em" }}>
+                  {phrase.text}
+                </span>
+              ))}
             </div>
           </div>
-        </div>
+        ) : (
+          <div
+            ref={stageRef}
+            style={{
+              position: "relative",
+              height: "160px",
+              marginBottom: "56px",
+              overflow: "hidden",
+            }}
+          >
+            <div style={{
+              position: "absolute", top: 0, left: 0, right: 0, height: "64px",
+              background: "linear-gradient(to bottom, #FCFBF8 30%, transparent 100%)",
+              zIndex: 2, pointerEvents: "none",
+            }} />
+            <div style={{
+              position: "absolute", bottom: 0, left: 0, right: 0, height: "48px",
+              background: "linear-gradient(to top, #FCFBF8 20%, transparent 100%)",
+              zIndex: 2, pointerEvents: "none",
+            }} />
+
+            {phrases.length === 0 && mode === "idle" && (
+              <div style={{ position: "absolute", bottom: "40px", left: 0, fontSize: "19px", color: "#C4B89A", fontStyle: "italic" }}>
+                Speak a memory…
+              </div>
+            )}
+
+            <div style={{
+              position: "absolute",
+              bottom: "32px",
+              left: 0,
+              right: 0,
+              transform: `translateY(-${offsetY}px)`,
+              transition: "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
+            }}>
+              <div
+                ref={innerRef}
+                style={{
+                  fontSize: "19px",
+                  color: "#000000",
+                  lineHeight: 1.75,
+                  wordBreak: "keep-all",
+                  overflowWrap: "break-word",
+                }}
+              >
+                {phrases.map((phrase, i) => {
+                  const fromEnd = phrases.length - 1 - i;
+                  const opacity = fromEnd > 6
+                    ? Math.max(0, 1 - (fromEnd - 6) * 0.15)
+                    : 1;
+                  const isNewest = i === phrases.length - 1 && mode === "replaying";
+                  return (
+                    <span key={phrase.id} style={{
+                      display: "inline-block",
+                      opacity,
+                      transition: "opacity 1.4s ease",
+                      animation: isNewest ? "wordIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both" : undefined,
+                      marginRight: "0.28em",
+                    }}>
+                      {phrase.text}
+                    </span>
+                  );
+                })}
+                {mode === "replaying" && (
+                  <span style={{ display: "inline-block", width: "1.5px", height: "16px", backgroundColor: "#9B8E7E", marginLeft: "2px", verticalAlign: "middle", animation: "blink 1.1s ease-in-out infinite" }} />
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
           <button
@@ -254,6 +290,7 @@ export default function OverstoryVoice() {
 
       <style>{`
         * { word-break: keep-all; }
+        .done-scroll::-webkit-scrollbar { display: none; }
         @keyframes wordIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
