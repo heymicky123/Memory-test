@@ -59,19 +59,19 @@
     var placeholder = stage.querySelector('[style*="italic"]');
     if (placeholder) placeholder.style.fontSize = "17px";
 
-    // Pagination indicator — 12 ticks, active at index 4
+    // Pagination indicator — 18 ticks flush to bottom, active at index 4
     if (!document.getElementById("ov-pagination")) {
-      var pageCount = 12;
+      var pageCount = 18;
       var currentPage = 4;
       var outer = document.createElement("div");
       outer.id = "ov-pagination";
       outer.style.cssText = "position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;pointer-events:none;z-index:10";
       var inner = document.createElement("div");
-      inner.style.cssText = "width:100%;max-width:420px;padding:0 32px 20px;box-sizing:border-box;display:flex;justify-content:space-between;align-items:flex-end";
+      inner.style.cssText = "width:100%;max-width:420px;padding:0 32px;box-sizing:border-box;display:flex;justify-content:space-between;align-items:flex-end";
       for (var j = 0; j < pageCount; j++) {
         var tick = document.createElement("div");
         tick.style.cssText = "width:1.5px;flex-shrink:0;" +
-          "height:" + (j === currentPage ? "20px" : "10px") + ";" +
+          "height:" + (j === currentPage ? "40px" : "20px") + ";" +
           "background-color:" + (j === currentPage ? "#000000" : "#D4CCC2");
         inner.appendChild(tick);
       }
