@@ -52,7 +52,7 @@ const SRT = [
 const PAGES = Array.from({ length: 18 });
 const CURRENT_PAGE = 4;
 
-const BAR_COUNT = 60; // 60 bars @ 2px wide, 3px gap, centered
+const BAR_COUNT = 60; // 60 bars @ 2px wide, 3px gap, step=5px, total=297px
 const BAR_HEIGHTS = (() => {
   let seed = 42;
   const rand = () => {
@@ -278,16 +278,22 @@ export default function OverstoryVoice() {
           <div style={{
             position: "absolute", bottom: "40px", left: "24px", right: "24px",
             height: "32px", display: "flex", alignItems: "center",
-            justifyContent: "center", gap: "3px", zIndex: 5,
+            justifyContent: "center", zIndex: 5,
           }}>
-            {BAR_HEIGHTS.map((h, i) => (
-              <div key={i} style={{
-                width: "2px", flexShrink: 0,
-                height: `${h}px`,
-                borderRadius: "1px",
-                backgroundColor: i / BAR_COUNT < progress ? "#6B5E4E" : "#DDD8D0",
-              }} />
-            ))}
+            <div style={{ position: "relative", width: "297px", height: "32px" }}>
+              {BAR_HEIGHTS.map((h, i) => (
+                <div key={i} style={{
+                  position: "absolute",
+                  left: `${i * 5}px`,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  width: "2px",
+                  height: `${h}px`,
+                  borderRadius: "1px",
+                  backgroundColor: i / BAR_COUNT < progress ? "#6B5E4E" : "#DDD8D0",
+                }} />
+              ))}
+            </div>
           </div>
 
           <div style={{
