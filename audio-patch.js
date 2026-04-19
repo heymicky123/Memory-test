@@ -12,8 +12,8 @@
     // Inject stylesheet — overrides compiled bundle's min-height:100vh
     var styleEl = document.createElement("style");
     styleEl.textContent = [
-      "html,body{margin:0;padding:0}",
-      "body{background:#1A1A18!important;min-height:100vh;display:flex!important;align-items:center!important;justify-content:center!important;padding:40px 24px;box-sizing:border-box}",
+      "html{background:#1A1A18!important}",
+      "body{margin:0;padding:0;background:#1A1A18!important;min-height:100vh;display:flex!important;align-items:center!important;justify-content:center!important}",
       "#root{display:flex;align-items:center;justify-content:center;min-height:unset}",
       "#ov-shell>div{min-height:0!important;height:100%!important;overflow:hidden!important}"
     ].join("");
