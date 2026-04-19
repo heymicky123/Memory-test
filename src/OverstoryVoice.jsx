@@ -105,139 +105,165 @@ export default function OverstoryVoice() {
   return (
     <div style={{
       minHeight: "100vh",
-      backgroundColor: "#FCFBF8",
+      backgroundColor: "#1A1A18",
       display: "flex",
-      flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      fontFamily: "'Georgia', 'Times New Roman', serif",
       padding: "40px 24px",
       boxSizing: "border-box",
-      position: "relative",
     }}>
 
+      {/* Phone shell */}
       <div style={{
-        position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0,
-        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`,
-      }} />
+        width: "390px",
+        height: "844px",
+        borderRadius: "50px",
+        backgroundColor: "#1C1C1A",
+        boxShadow: "0 40px 100px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.06)",
+        flexShrink: 0,
+        position: "relative",
+        overflow: "hidden",
+      }}>
 
-      <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "420px", boxSizing: "border-box", padding: "0 32px" }}>
+        {/* Screen */}
+        <div style={{
+          height: "100%",
+          backgroundColor: "#FCFBF8",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "'Georgia', 'Times New Roman', serif",
+          padding: "40px 24px",
+          boxSizing: "border-box",
+          position: "relative",
+          overflow: "hidden",
+        }}>
 
-        <div style={{ marginBottom: "40px", backgroundColor: "#F2E7DA", padding: "16px" }}>
-          <img
-            src={`${import.meta.env.BASE_URL}Memory_test_ferry.gif`}
-            alt=""
-            style={{ width: "100%", display: "block" }}
-          />
-        </div>
-
-        <div
-          ref={stageRef}
-          style={{
-            position: "relative",
-            height: "160px",
-            marginBottom: "56px",
-            overflow: "hidden",
-          }}
-        >
           <div style={{
-            position: "absolute", top: 0, left: 0, right: 0, height: "64px",
-            background: "linear-gradient(to bottom, #FCFBF8 30%, transparent 100%)",
-            zIndex: 2, pointerEvents: "none",
-          }} />
-          <div style={{
-            position: "absolute", bottom: 0, left: 0, right: 0, height: "48px",
-            background: "linear-gradient(to top, #FCFBF8 20%, transparent 100%)",
-            zIndex: 2, pointerEvents: "none",
+            position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`,
           }} />
 
-          {phrases.length === 0 && mode === "idle" && (
-            <div style={{ position: "absolute", bottom: "40px", left: 0, fontSize: "17px", color: "#C4B89A", fontStyle: "italic" }}>
-              Speak a memory…
+          <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "420px", boxSizing: "border-box", padding: "0 32px" }}>
+
+            <div style={{ marginBottom: "40px", backgroundColor: "#F2E7DA", padding: "16px" }}>
+              <img
+                src={`${import.meta.env.BASE_URL}Memory_test_ferry.gif`}
+                alt=""
+                style={{ width: "100%", display: "block" }}
+              />
             </div>
-          )}
 
-          <div style={{
-            position: "absolute",
-            bottom: "32px",
-            left: 0,
-            right: 0,
-            transform: `translateY(-${offsetY}px)`,
-            transition: "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
-          }}>
             <div
-              ref={innerRef}
+              ref={stageRef}
               style={{
-                fontSize: "17px",
-                color: "#000000",
-                lineHeight: 1.75,
-                wordBreak: "keep-all",
-                overflowWrap: "break-word",
+                position: "relative",
+                height: "160px",
+                marginBottom: "56px",
+                overflow: "hidden",
               }}
             >
-              {phrases.map((phrase, i) => {
-                const fromEnd = phrases.length - 1 - i;
-                const opacity = mode === "done"
-                  ? 1
-                  : fromEnd > 6
-                  ? Math.max(0, 1 - (fromEnd - 6) * 0.15)
-                  : 1;
-                const isNewest = i === phrases.length - 1 && mode === "replaying";
-                return (
-                  <span key={phrase.id} style={{
-                    display: "inline-block",
-                    opacity,
-                    transition: "opacity 1.4s ease",
-                    animation: isNewest ? "wordIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both" : undefined,
-                    marginRight: "0.28em",
-                  }}>
-                    {phrase.text}
-                  </span>
-                );
-              })}
-              {mode === "replaying" && (
-                <span style={{ display: "inline-block", width: "1.5px", height: "16px", backgroundColor: "#9B8E7E", marginLeft: "2px", verticalAlign: "middle", animation: "blink 1.1s ease-in-out infinite" }} />
+              <div style={{
+                position: "absolute", top: 0, left: 0, right: 0, height: "64px",
+                background: "linear-gradient(to bottom, #FCFBF8 30%, transparent 100%)",
+                zIndex: 2, pointerEvents: "none",
+              }} />
+              <div style={{
+                position: "absolute", bottom: 0, left: 0, right: 0, height: "48px",
+                background: "linear-gradient(to top, #FCFBF8 20%, transparent 100%)",
+                zIndex: 2, pointerEvents: "none",
+              }} />
+
+              {phrases.length === 0 && mode === "idle" && (
+                <div style={{ position: "absolute", bottom: "40px", left: 0, fontSize: "17px", color: "#C4B89A", fontStyle: "italic" }}>
+                  Speak a memory…
+                </div>
               )}
+
+              <div style={{
+                position: "absolute",
+                bottom: "32px",
+                left: 0,
+                right: 0,
+                transform: `translateY(-${offsetY}px)`,
+                transition: "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
+              }}>
+                <div
+                  ref={innerRef}
+                  style={{
+                    fontSize: "17px",
+                    color: "#000000",
+                    lineHeight: 1.75,
+                    wordBreak: "keep-all",
+                    overflowWrap: "break-word",
+                  }}
+                >
+                  {phrases.map((phrase, i) => {
+                    const fromEnd = phrases.length - 1 - i;
+                    const opacity = mode === "done"
+                      ? 1
+                      : fromEnd > 6
+                      ? Math.max(0, 1 - (fromEnd - 6) * 0.15)
+                      : 1;
+                    const isNewest = i === phrases.length - 1 && mode === "replaying";
+                    return (
+                      <span key={phrase.id} style={{
+                        display: "inline-block",
+                        opacity,
+                        transition: "opacity 1.4s ease",
+                        animation: isNewest ? "wordIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both" : undefined,
+                        marginRight: "0.28em",
+                      }}>
+                        {phrase.text}
+                      </span>
+                    );
+                  })}
+                  {mode === "replaying" && (
+                    <span style={{ display: "inline-block", width: "1.5px", height: "16px", backgroundColor: "#9B8E7E", marginLeft: "2px", verticalAlign: "middle", animation: "blink 1.1s ease-in-out infinite" }} />
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
+              <button
+                onClick={replaySRT}
+                disabled={mode === "replaying"}
+                style={{
+                  padding: "11px 22px", fontFamily: "Georgia, serif", fontSize: "13px", letterSpacing: "0.05em",
+                  cursor: mode === "replaying" ? "not-allowed" : "pointer",
+                  opacity: mode === "replaying" ? 0.4 : 1,
+                  backgroundColor: "transparent", border: "1px solid #9B8E7E", color: "#000000", transition: "all 0.15s",
+                }}
+                onMouseEnter={e => { if (mode !== "replaying") e.currentTarget.style.backgroundColor = "#EDECE8"; }}
+                onMouseLeave={e => e.currentTarget.style.backgroundColor = "transparent"}
+              >
+                Demo
+              </button>
             </div>
           </div>
-        </div>
 
-        <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
-          <button
-            onClick={replaySRT}
-            disabled={mode === "replaying"}
-            style={{
-              padding: "11px 22px", fontFamily: "Georgia, serif", fontSize: "13px", letterSpacing: "0.05em",
-              cursor: mode === "replaying" ? "not-allowed" : "pointer",
-              opacity: mode === "replaying" ? 0.4 : 1,
-              backgroundColor: "transparent", border: "1px solid #9B8E7E", color: "#000000", transition: "all 0.15s",
-            }}
-            onMouseEnter={e => { if (mode !== "replaying") e.currentTarget.style.backgroundColor = "#EDECE8"; }}
-            onMouseLeave={e => e.currentTarget.style.backgroundColor = "transparent"}
-          >
-            Demo
-          </button>
+          <div style={{
+            position: "absolute", bottom: 0, left: 0, right: 0,
+            display: "none",
+            pointerEvents: "none", zIndex: 10,
+          }}>
+            <div style={{
+              width: "100%", maxWidth: "420px", padding: "0 32px",
+              boxSizing: "border-box", display: "flex",
+              justifyContent: "space-between", alignItems: "flex-end",
+            }}>
+              {PAGES.map((_, i) => (
+                <div key={i} style={{
+                  width: "1.5px", flexShrink: 0,
+                  height: i === CURRENT_PAGE ? "40px" : "20px",
+                  backgroundColor: i === CURRENT_PAGE ? "#000000" : "#D4CCC2",
+                }} />
+              ))}
+            </div>
+          </div>
 
-        </div>
-      </div>
-
-      <div style={{
-        position: "fixed", bottom: 0, left: 0, right: 0,
-        display: "none",
-        pointerEvents: "none", zIndex: 10,
-      }}>
-        <div style={{
-          width: "100%", maxWidth: "420px", padding: "0 32px",
-          boxSizing: "border-box", display: "flex",
-          justifyContent: "space-between", alignItems: "flex-end",
-        }}>
-          {PAGES.map((_, i) => (
-            <div key={i} style={{
-              width: "1.5px", flexShrink: 0,
-              height: i === CURRENT_PAGE ? "40px" : "20px",
-              backgroundColor: i === CURRENT_PAGE ? "#000000" : "#D4CCC2",
-            }} />
-          ))}
         </div>
       </div>
 
