@@ -1,5 +1,5 @@
 (function () {
-  var BAR_COUNT = 105;
+  var BAR_COUNT = 70;
   var BAR_HEIGHTS = (function () {
     var seed = 42;
     var rand = function () {
@@ -25,9 +25,7 @@
     if (e.target.tagName === "BUTTON" && e.target.textContent.trim() === "Demo") {
       audio.currentTime = 0;
       audio.play().catch(function () {});
-      // Reset bars
       for (var i = 0; i < bars.length; i++) bars[i].style.backgroundColor = "#DDD8D0";
-      // Start RAF
       if (rafId) cancelAnimationFrame(rafId);
       var loop = function () {
         if (audio.paused || audio.ended) { rafId = null; return; }
@@ -41,7 +39,6 @@
     }
   });
 
-  // Hide Export button whenever it appears
   var observer = new MutationObserver(function () {
     var btns = document.querySelectorAll("button");
     for (var i = 0; i < btns.length; i++) {
@@ -60,29 +57,26 @@
     var appDiv = col.parentNode;
     var root = appDiv.parentNode;
 
-    // Stylesheet: dark background + phone shell constraints
     var styleEl = document.createElement("style");
     styleEl.textContent = [
       "html{margin:0!important;padding:0!important;background:#1A1A18!important}",
       "body{margin:0!important;padding:0!important;background:#1A1A18!important}",
       "#root{margin:0!important;padding:0!important;width:100%!important;min-height:100vh!important;background:#1A1A18!important;display:flex!important;align-items:center!important;justify-content:center!important}",
-      "#ov-shell>div{min-height:0!important;height:100%!important;overflow:hidden!important}"
+      "#ov-shell>div{min-height:0!important;height:100%!important;overflow:hidden!important;padding-bottom:80px!important}"
     ].join("");
     document.head.appendChild(styleEl);
 
-    // Phone shell
     var shell = document.createElement("div");
     shell.id = "ov-shell";
     shell.style.cssText = "width:390px;height:844px;border-radius:50px;background-color:#1C1C1A;box-shadow:0 40px 100px rgba(0,0,0,0.7),inset 0 0 0 1px rgba(255,255,255,0.06);flex-shrink:0;position:relative;overflow:hidden;";
     root.insertBefore(shell, appDiv);
     shell.appendChild(appDiv);
 
-    // Waveform
     var waveform = document.createElement("div");
-    waveform.style.cssText = "position:absolute;bottom:20px;left:20px;right:20px;height:32px;display:flex;align-items:center;justify-content:space-between;z-index:5;";
+    waveform.style.cssText = "position:absolute;bottom:40px;left:50%;transform:translateX(-50%);width:280px;height:32px;display:flex;align-items:center;justify-content:space-between;z-index:5;";
     for (var i = 0; i < BAR_COUNT; i++) {
       var bar = document.createElement("div");
-      bar.style.cssText = "width:2px;height:" + BAR_HEIGHTS[i] + "px;background-color:#DDD8D0;flex-shrink:0;";
+      bar.style.cssText = "width:2px;height:" + BAR_HEIGHTS[i] + "px;background-color:#DDD8D0;flex-shrink:0;border-radius:2px;";
       waveform.appendChild(bar);
       bars.push(bar);
     }
