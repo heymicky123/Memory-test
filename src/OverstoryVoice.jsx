@@ -52,7 +52,7 @@ const SRT = [
 const PAGES = Array.from({ length: 18 });
 const CURRENT_PAGE = 4;
 
-const BAR_COUNT = 105;
+const BAR_COUNT = 70;
 const BAR_HEIGHTS = (() => {
   let seed = 42;
   const rand = () => {
@@ -164,7 +164,7 @@ export default function OverstoryVoice() {
           alignItems: "center",
           justifyContent: "center",
           fontFamily: "'Georgia', 'Times New Roman', serif",
-          padding: "40px 24px",
+          padding: "40px 24px 80px",
           boxSizing: "border-box",
           position: "relative",
           overflow: "hidden",
@@ -276,7 +276,8 @@ export default function OverstoryVoice() {
 
           {/* Waveform progress */}
           <div style={{
-            position: "absolute", bottom: "20px", left: "20px", right: "20px",
+            position: "absolute", bottom: "40px", left: "50%",
+            transform: "translateX(-50%)", width: "280px",
             height: "32px", display: "flex", alignItems: "center",
             justifyContent: "space-between", zIndex: 5,
           }}>
@@ -284,6 +285,7 @@ export default function OverstoryVoice() {
               <div key={i} style={{
                 width: "2px", flexShrink: 0,
                 height: `${h}px`,
+                borderRadius: "2px",
                 backgroundColor: i / BAR_COUNT < progress ? "#6B5E4E" : "#DDD8D0",
               }} />
             ))}
