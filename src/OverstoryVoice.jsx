@@ -180,7 +180,7 @@ export default function OverstoryVoice() {
           alignItems: "center",
           justifyContent: "center",
           fontFamily: "'Georgia', 'Times New Roman', serif",
-          padding: "40px 24px 80px",
+          padding: "84px 24px 80px",
           boxSizing: "border-box",
           position: "relative",
           overflow: "hidden",
@@ -190,6 +190,32 @@ export default function OverstoryVoice() {
             position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0,
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`,
           }} />
+
+          {/* Nav bar */}
+          <div style={{
+            position: "absolute", top: "20px", left: "20px", right: "20px",
+            height: "44px", display: "grid", gridTemplateColumns: "40px 1fr 40px",
+            alignItems: "center", zIndex: 3,
+          }}>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3A3530" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="11,3 5,9 11,15" />
+            </svg>
+            <div style={{ textAlign: "center", fontSize: "18px", fontWeight: 400, color: "#3A3530" }}>
+              Moving to Kirribilli
+            </div>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <div style={{
+                width: "30px", height: "30px", borderRadius: "50%",
+                backgroundColor: "#FFFFFF", boxShadow: "0 1px 6px rgba(0,0,0,0.10)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#3A3530" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9.5 2.5L11.5 4.5L4.5 11.5H2.5V9.5L9.5 2.5Z"/>
+                  <line x1="8" y1="4" x2="10" y2="6"/>
+                </svg>
+              </div>
+            </div>
+          </div>
 
           <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "420px", boxSizing: "border-box", padding: "0 32px" }}>
 
