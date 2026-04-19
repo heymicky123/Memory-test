@@ -1,5 +1,5 @@
 (function () {
-  var BAR_COUNT = Math.floor((390 - 80 + 1.5) / 3.5); // 89 bars @ 2px wide, 1.5px gap, 40px padding each side
+  var BAR_COUNT = 60; // 60 bars @ 2px wide, 3px gap, centered
   var BAR_HEIGHTS = (function () {
     var seed = 42;
     var rand = function () {
@@ -73,10 +73,10 @@
     shell.appendChild(appDiv);
 
     var waveform = document.createElement("div");
-    waveform.style.cssText = "position:absolute;bottom:40px;left:40px;right:40px;height:32px;display:flex;align-items:center;gap:1.5px;z-index:5;";
+    waveform.style.cssText = "position:absolute;bottom:40px;left:24px;right:24px;height:32px;display:flex;align-items:center;justify-content:center;gap:3px;z-index:5;";
     for (var i = 0; i < BAR_COUNT; i++) {
       var bar = document.createElement("div");
-      bar.style.cssText = "width:2px;height:" + BAR_HEIGHTS[i] + "px;background-color:#DDD8D0;border-radius:1px;";
+      bar.style.cssText = "width:2px;height:" + BAR_HEIGHTS[i] + "px;background-color:#DDD8D0;border-radius:1px;flex-shrink:0;";
       waveform.appendChild(bar);
       bars.push(bar);
     }
