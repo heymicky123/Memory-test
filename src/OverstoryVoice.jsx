@@ -52,7 +52,7 @@ const SRT = [
 const PAGES = Array.from({ length: 18 });
 const CURRENT_PAGE = 4;
 
-const BAR_COUNT = 60; // 60 bars @ 2px wide, 3px gap, step=5px, total=297px
+const BAR_COUNT = 60; // 60 bars @ 2px wide, step=5px, total=297px
 const BAR_HEIGHTS = (() => {
   let seed = 42;
   const rand = () => {
@@ -137,11 +137,27 @@ export default function OverstoryVoice() {
       minHeight: "100vh",
       backgroundColor: "#1A1A18",
       display: "flex",
+      flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
       padding: "40px 24px",
       boxSizing: "border-box",
+      gap: "32px",
     }}>
+
+      <button
+        onClick={replaySRT}
+        disabled={mode === "replaying"}
+        style={{
+          fontFamily: "Georgia, serif", fontSize: "13px", letterSpacing: "0.05em",
+          cursor: mode === "replaying" ? "not-allowed" : "pointer",
+          opacity: mode === "replaying" ? 0.4 : 1,
+          backgroundColor: "transparent", border: "none", color: "#7B7B74",
+          padding: "0", transition: "opacity 0.15s",
+        }}
+      >
+        Demo
+      </button>
 
       {/* Phone shell */}
       <div style={{
@@ -190,7 +206,6 @@ export default function OverstoryVoice() {
               style={{
                 position: "relative",
                 height: "160px",
-                marginBottom: "56px",
                 overflow: "hidden",
               }}
             >
@@ -256,22 +271,6 @@ export default function OverstoryVoice() {
               </div>
             </div>
 
-            <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
-              <button
-                onClick={replaySRT}
-                disabled={mode === "replaying"}
-                style={{
-                  padding: "11px 22px", fontFamily: "Georgia, serif", fontSize: "13px", letterSpacing: "0.05em",
-                  cursor: mode === "replaying" ? "not-allowed" : "pointer",
-                  opacity: mode === "replaying" ? 0.4 : 1,
-                  backgroundColor: "transparent", border: "1px solid #9B8E7E", color: "#000000", transition: "all 0.15s",
-                }}
-                onMouseEnter={e => { if (mode !== "replaying") e.currentTarget.style.backgroundColor = "#EDECE8"; }}
-                onMouseLeave={e => e.currentTarget.style.backgroundColor = "transparent"}
-              >
-                Demo
-              </button>
-            </div>
           </div>
 
           {/* Waveform progress */}
