@@ -52,15 +52,33 @@ const SRT = [
 const PAGES = Array.from({ length: 18 });
 const CURRENT_PAGE = 4;
 
+const BAR_COUNT = 105;
+const BAR_HEIGHTS = (() => {
+  let seed = 42;
+  const rand = () => {
+    seed = (seed * 1664525 + 1013904223) & 0xffffffff;
+    return (seed >>> 0) / 0xffffffff;
+  };
+  return Array.from({ length: BAR_COUNT }, (_, i) => {
+    const t = i / BAR_COUNT;
+    const slow = (Math.sin(t * Math.PI * 4) + 1) / 2;
+    const fast = (Math.sin(t * Math.PI * 18) + 1) / 2;
+    const noise = rand();
+    return Math.round(4 + (slow * 0.3 + fast * 0.3 + noise * 0.4) * 24);
+  });
+})();
+
 export default function OverstoryVoice() {
   const [phrases, setPhrases] = useState([]);
   const [mode, setMode] = useState("idle");
   const [offsetY, setOffsetY] = useState(0);
+  const [progress, setProgress] = useState(0);
   const timeoutsRef = useRef([]);
   const innerRef = useRef(null);
   const stageRef = useRef(null);
   const prevInnerH = useRef(0);
   const audioRef = useRef(new Audio(`${import.meta.env.BASE_URL}Ferry.m4a`));
+  const rafRef = useRef(null);
 
   const clearTimeouts = () => {
     timeoutsRef.current.forEach(clearTimeout);
@@ -69,13 +87,22 @@ export default function OverstoryVoice() {
 
   const replaySRT = () => {
     clearTimeouts();
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
     setPhrases([]);
     setOffsetY(0);
+    setProgress(0);
     prevInnerH.current = 0;
     setMode("replaying");
     const audio = audioRef.current;
     audio.currentTime = 0;
     audio.play();
+
+    const loop = () => {
+      if (audio.paused || audio.ended) { rafRef.current = null; return; }
+      setProgress(audio.currentTime / (audio.duration || 1));
+      rafRef.current = requestAnimationFrame(loop);
+    };
+    rafRef.current = requestAnimationFrame(loop);
 
     SRT.forEach(({ start, text }, i) => {
       const t = setTimeout(() => {
@@ -100,7 +127,10 @@ export default function OverstoryVoice() {
     }
   }, [phrases]);
 
-  useEffect(() => () => clearTimeouts(), []);
+  useEffect(() => () => {
+    clearTimeouts();
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+  }, []);
 
   return (
     <div style={{
@@ -244,10 +274,24 @@ export default function OverstoryVoice() {
             </div>
           </div>
 
+          {/* Waveform progress */}
+          <div style={{
+            position: "absolute", bottom: "20px", left: "20px", right: "20px",
+            height: "32px", display: "flex", alignItems: "center",
+            justifyContent: "space-between", zIndex: 5,
+          }}>
+            {BAR_HEIGHTS.map((h, i) => (
+              <div key={i} style={{
+                width: "2px", flexShrink: 0,
+                height: `${h}px`,
+                backgroundColor: i / BAR_COUNT < progress ? "#6B5E4E" : "#DDD8D0",
+              }} />
+            ))}
+          </div>
+
           <div style={{
             position: "absolute", bottom: 0, left: 0, right: 0,
-            display: "none",
-            pointerEvents: "none", zIndex: 10,
+            display: "none", pointerEvents: "none", zIndex: 10,
           }}>
             <div style={{
               width: "100%", maxWidth: "420px", padding: "0 32px",
