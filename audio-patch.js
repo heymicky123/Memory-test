@@ -68,7 +68,7 @@
       "html{margin:0!important;padding:0!important;background:#1A1A18!important}",
       "body{margin:0!important;padding:0!important;background:#1A1A18!important}",
       "#root{margin:0!important;padding:0!important;width:100%!important;min-height:100vh!important;background:#1A1A18!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:32px!important}",
-      "#ov-shell>div{min-height:0!important;height:100%!important;overflow:hidden!important;padding-top:84px!important;padding-bottom:80px!important}",
+      "#ov-shell>div{min-height:0!important;height:100%!important;overflow:hidden!important;padding-top:0!important;padding-bottom:80px!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:center!important}",
       "#ov-shell button{display:none!important}"
     ].join("");
     document.head.appendChild(styleEl);
@@ -99,9 +99,9 @@
     root.insertBefore(shell, appDiv);
     shell.appendChild(appDiv);
 
-    // Nav bar — absolute inside shell, overlays screen top
+    // Nav bar — in-flow, prepended to appDiv as first flex child
     var navBar = document.createElement("div");
-    navBar.style.cssText = "position:absolute;top:20px;left:20px;right:20px;height:44px;display:grid;grid-template-columns:40px 1fr 40px;align-items:center;z-index:10;font-family:Georgia,serif;";
+    navBar.style.cssText = "width:100%;flex-shrink:0;margin-top:20px;height:44px;display:grid;grid-template-columns:40px 1fr 40px;align-items:center;padding:0 20px;box-sizing:border-box;position:relative;z-index:3;font-family:Georgia,serif;";
 
     var leftCol = document.createElement("div");
     leftCol.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3A3530" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="11,3 5,9 11,15"/></svg>';
@@ -117,7 +117,10 @@
     rightCol.innerHTML = '<div style="width:30px;height:30px;border-radius:50%;background:white;box-shadow:0 1px 6px rgba(0,0,0,0.10);display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#3A3530" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2.5L11.5 4.5L4.5 11.5H2.5V9.5L9.5 2.5Z"/><line x1="8" y1="4" x2="10" y2="6"/></svg></div>';
     navBar.appendChild(rightCol);
 
-    shell.appendChild(navBar);
+    appDiv.insertBefore(navBar, appDiv.firstChild);
+
+    col.style.marginTop = "auto";
+    col.style.marginBottom = "auto";
 
     // Waveform
     var waveform = document.createElement("div");
