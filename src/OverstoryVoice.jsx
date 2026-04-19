@@ -268,6 +268,7 @@ export default function OverstoryVoice() {
       </div>
 
       <style>{`
+        html, body { margin: 0; padding: 0; background: #1A1A18; }
         * { word-break: keep-all; }
         @keyframes wordIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
