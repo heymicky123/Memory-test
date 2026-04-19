@@ -178,9 +178,9 @@ export default function OverstoryVoice() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           fontFamily: "'Georgia', 'Times New Roman', serif",
-          padding: "84px 24px 80px",
+          padding: "0 24px 80px",
           boxSizing: "border-box",
           position: "relative",
           overflow: "hidden",
@@ -193,9 +193,10 @@ export default function OverstoryVoice() {
 
           {/* Nav bar */}
           <div style={{
-            position: "absolute", top: "20px", left: "20px", right: "20px",
+            width: "100%", flexShrink: 0, marginTop: "20px",
             height: "44px", display: "grid", gridTemplateColumns: "40px 1fr 40px",
-            alignItems: "center", zIndex: 3,
+            alignItems: "center", padding: "0 20px", boxSizing: "border-box",
+            position: "relative", zIndex: 3,
           }}>
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3A3530" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="11,3 5,9 11,15" />
@@ -217,7 +218,7 @@ export default function OverstoryVoice() {
             </div>
           </div>
 
-          <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "420px", boxSizing: "border-box", padding: "0 32px" }}>
+          <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "420px", boxSizing: "border-box", padding: "0 32px", marginTop: "auto", marginBottom: "auto" }}>
 
             <div style={{ marginBottom: "40px", backgroundColor: "#F2E7DA", padding: "16px" }}>
               <img
