@@ -20,22 +20,28 @@
   var audio = new Audio("https://raw.githubusercontent.com/heymicky123/Quick_test/claude/srt-subtitle-component-UzVua/Ferry.m4a");
   var bars = [];
   var rafId = null;
+  var externalBtn = null;
+
+  function startPlayback() {
+    audio.currentTime = 0;
+    audio.play().catch(function () {});
+    for (var i = 0; i < bars.length; i++) bars[i].style.backgroundColor = "#DDD8D0";
+    if (rafId) cancelAnimationFrame(rafId);
+    var loop = function () {
+      if (audio.paused || audio.ended) { rafId = null; return; }
+      var progress = audio.currentTime / (audio.duration || 1);
+      for (var i = 0; i < bars.length; i++) {
+        bars[i].style.backgroundColor = (i / BAR_COUNT < progress) ? "#6B5E4E" : "#DDD8D0";
+      }
+      rafId = requestAnimationFrame(loop);
+    };
+    rafId = requestAnimationFrame(loop);
+  }
 
   document.addEventListener("click", function (e) {
     if (e.target.tagName === "BUTTON" && e.target.textContent.trim() === "Demo") {
-      audio.currentTime = 0;
-      audio.play().catch(function () {});
-      for (var i = 0; i < bars.length; i++) bars[i].style.backgroundColor = "#DDD8D0";
-      if (rafId) cancelAnimationFrame(rafId);
-      var loop = function () {
-        if (audio.paused || audio.ended) { rafId = null; return; }
-        var progress = audio.currentTime / (audio.duration || 1);
-        for (var i = 0; i < bars.length; i++) {
-          bars[i].style.backgroundColor = (i / BAR_COUNT < progress) ? "#6B5E4E" : "#DDD8D0";
-        }
-        rafId = requestAnimationFrame(loop);
-      };
-      rafId = requestAnimationFrame(loop);
+      if (e.target === externalBtn) return;
+      startPlayback();
     }
   });
 
@@ -61,10 +67,33 @@
     styleEl.textContent = [
       "html{margin:0!important;padding:0!important;background:#1A1A18!important}",
       "body{margin:0!important;padding:0!important;background:#1A1A18!important}",
-      "#root{margin:0!important;padding:0!important;width:100%!important;min-height:100vh!important;background:#1A1A18!important;display:flex!important;align-items:center!important;justify-content:center!important}",
-      "#ov-shell>div{min-height:0!important;height:100%!important;overflow:hidden!important;padding-bottom:80px!important}"
+      "#root{margin:0!important;padding:0!important;width:100%!important;min-height:100vh!important;background:#1A1A18!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:32px!important}",
+      "#ov-shell>div{min-height:0!important;height:100%!important;overflow:hidden!important;padding-bottom:80px!important}",
+      "#ov-shell button{display:none!important}"
     ].join("");
     document.head.appendChild(styleEl);
+
+    // External Demo button above the shell
+    externalBtn = document.createElement("button");
+    externalBtn.textContent = "Demo";
+    externalBtn.style.cssText = "font-family:Georgia,serif;font-size:13px;letter-spacing:0.05em;cursor:pointer;background:transparent;border:none;color:#7B7B74;padding:0;transition:opacity 0.15s;";
+    externalBtn.addEventListener("click", function () {
+      if (externalBtn.disabled) return;
+      externalBtn.disabled = true;
+      externalBtn.style.opacity = "0.4";
+      externalBtn.style.cursor = "not-allowed";
+      startPlayback();
+      // Find the inner React button and click it to trigger SRT animation
+      var innerBtn = appDiv.querySelector("button");
+      if (innerBtn) innerBtn.click();
+      audio.addEventListener("ended", function onEnd() {
+        externalBtn.disabled = false;
+        externalBtn.style.opacity = "1";
+        externalBtn.style.cursor = "pointer";
+        audio.removeEventListener("ended", onEnd);
+      });
+    });
+    root.insertBefore(externalBtn, appDiv);
 
     var shell = document.createElement("div");
     shell.id = "ov-shell";
