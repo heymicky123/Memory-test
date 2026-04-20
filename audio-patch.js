@@ -103,7 +103,6 @@
       imgW.style.transform = "translateY(25px)";
       stage.style.transition = "none";
       stage.style.opacity = "0";
-      stage.style.transform = "translateY(25px)";
       waveform.style.transition = "none";
       waveform.style.opacity = "0";
       waveform.style.transform = "translateY(25px)";
@@ -113,16 +112,16 @@
           imgW.style.opacity = "1";
           imgW.style.transform = "translateY(0)";
           setTimeout(function () {
-            stage.style.transition = "opacity 450ms ease-out, transform 450ms ease-out";
-            stage.style.opacity = "1";
-            stage.style.transform = "translateY(0)";
             waveform.style.transition = "opacity 450ms ease-out, transform 450ms ease-out";
             waveform.style.opacity = "1";
             waveform.style.transform = "translateY(0)";
+          }, 400);
+          setTimeout(function () {
+            stage.style.opacity = "1";
             startPlayback();
             var innerBtn = appDiv.querySelector("button");
             if (innerBtn) innerBtn.click();
-          }, 400);
+          }, 800);
         });
       });
       audio.addEventListener("ended", function onEnd() {
@@ -168,7 +167,6 @@
     col.firstElementChild.style.opacity = "0";
     col.firstElementChild.style.transform = "translateY(25px)";
     stage.style.opacity = "0";
-    stage.style.transform = "translateY(25px)";
     var reactWaveform = col.nextElementSibling;
     if (reactWaveform) reactWaveform.style.display = "none";
 
