@@ -1,4 +1,5 @@
 (function () {
+  var rootEl = document.getElementById("root"); if (rootEl) rootEl.style.opacity = "0";
   var BAR_COUNT = 60;
   var BAR_HEIGHTS = (function () {
     var seed = 42;
@@ -213,6 +214,7 @@
       bars.push(bar);
     }
     appDiv.appendChild(waveform);
+    if (rootEl) rootEl.style.opacity = "1";
   }
 
   setTimeout(patch, 300);
