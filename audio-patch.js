@@ -108,7 +108,7 @@
     navBar.appendChild(leftCol);
 
     var titleCol = document.createElement("div");
-    titleCol.style.cssText = "display:flex;align-items:center;justify-content:center;font-size:20px;font-style:italic;font-weight:400;color:#3A3530;font-family:Georgia,serif;";
+    titleCol.style.cssText = "display:flex;align-items:center;justify-content:center;font-size:16px;font-style:italic;font-weight:400;color:#3A3530;font-family:Georgia,serif;";
     titleCol.textContent = "Moving to Kirribilli";
     navBar.appendChild(titleCol);
 
