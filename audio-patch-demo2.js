@@ -102,9 +102,9 @@
 
     clearPlaceholder();
 
-    // Swap image to Ferry_animated.gif
+    // Swap image to Ferry_animated.gif loaded from raw GitHub
     var img = col.firstElementChild.querySelector("img");
-    if (img) img.src = img.src.replace("Memory_test_ferry.gif", "Ferry_animated.gif");
+    if (img) img.src = "https://raw.githubusercontent.com/heymicky123/Quick_test/claude/srt-subtitle-component-UzVua/Ferry_animated.gif";
 
     externalBtn = document.createElement("button");
     externalBtn.textContent = "Demo";
