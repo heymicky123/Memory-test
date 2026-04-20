@@ -22,6 +22,20 @@
   var rafId = null;
   var externalBtn = null;
 
+  // Demo 1 / Demo 2 toggle
+  var navEl = document.createElement("div");
+  navEl.style.cssText = "position:fixed;top:20px;left:24px;display:flex;gap:20px;z-index:1000;";
+  var d1 = document.createElement("span");
+  d1.textContent = "Demo 1";
+  d1.style.cssText = "font-family:Georgia,serif;font-size:13px;letter-spacing:0.05em;color:#BFB3A4;";
+  var d2 = document.createElement("a");
+  d2.href = "demo2.html";
+  d2.textContent = "Demo 2";
+  d2.style.cssText = "font-family:Georgia,serif;font-size:13px;letter-spacing:0.05em;color:#4A4A46;text-decoration:none;cursor:pointer;";
+  navEl.appendChild(d1);
+  navEl.appendChild(d2);
+  document.body.appendChild(navEl);
+
   function clearPlaceholder() {
     var divs = document.querySelectorAll("div");
     for (var i = 0; i < divs.length; i++) {
