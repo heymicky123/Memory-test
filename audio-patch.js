@@ -22,6 +22,18 @@
   var rafId = null;
   var externalBtn = null;
 
+  function clearPlaceholder() {
+    var divs = document.querySelectorAll("div");
+    for (var i = 0; i < divs.length; i++) {
+      var el = divs[i];
+      if (el.childNodes.length === 1 &&
+          el.childNodes[0].nodeType === 3 &&
+          el.childNodes[0].textContent.trim() === "Speak a memory\u2026") {
+        el.childNodes[0].textContent = "";
+      }
+    }
+  }
+
   function startPlayback() {
     audio.currentTime = 0;
     audio.play().catch(function () {});
@@ -50,6 +62,7 @@
     for (var i = 0; i < btns.length; i++) {
       if (btns[i].textContent.trim() === "Export \u2192") btns[i].style.display = "none";
     }
+    clearPlaceholder();
   });
   observer.observe(document.body, { childList: true, subtree: true });
 
@@ -69,10 +82,11 @@
       "body{margin:0!important;padding:0!important;background:#1A1A18!important}",
       "#root{margin:0!important;padding:0!important;width:100%!important;min-height:100vh!important;background:#1A1A18!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:32px!important}",
       "#ov-shell>div{min-height:0!important;height:100%!important;overflow:hidden!important;padding-top:0!important;padding-bottom:80px!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:center!important}",
-      "#ov-shell button{display:none!important}",
-      "[style*='C4B89A']{color:#FCFBF8!important}"
+      "#ov-shell button{display:none!important}"
     ].join("");
     document.head.appendChild(styleEl);
+
+    clearPlaceholder();
 
     externalBtn = document.createElement("button");
     externalBtn.textContent = "Demo";
