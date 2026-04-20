@@ -102,9 +102,21 @@
 
     clearPlaceholder();
 
-    // Swap image to Ferry_animated.gif loaded from raw GitHub
+    // Swap image to Ferry_animated.gif and apply bleed styles
     var img = col.firstElementChild.querySelector("img");
-    if (img) img.src = "https://raw.githubusercontent.com/heymicky123/Quick_test/claude/srt-subtitle-component-UzVua/Ferry_animated.gif";
+    if (img) {
+      img.src = "https://raw.githubusercontent.com/heymicky123/Quick_test/claude/srt-subtitle-component-UzVua/Ferry_animated.gif";
+      img.style.width = "calc(100% + 40px)";
+      img.style.marginLeft = "-20px";
+      img.style.marginTop = "-20px";
+      img.style.marginBottom = "-20px";
+      img.style.display = "block";
+    }
+    var imgWrapper = col.firstElementChild;
+    imgWrapper.style.marginLeft = "-56px";
+    imgWrapper.style.marginRight = "-56px";
+    imgWrapper.style.padding = "0";
+    imgWrapper.style.marginBottom = "50px";
 
     externalBtn = document.createElement("button");
     externalBtn.textContent = "Demo";
@@ -181,7 +193,7 @@
     col.style.marginTop = "auto";
     col.style.marginBottom = "auto";
     col.style.paddingTop = "50px";
-    col.firstElementChild.style.marginBottom = "30px";
+    col.firstElementChild.style.marginBottom = "50px";
     col.firstElementChild.style.opacity = "0";
     col.firstElementChild.style.transform = "translateY(25px)";
     stage.style.opacity = "0";
