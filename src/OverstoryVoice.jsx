@@ -193,7 +193,7 @@ export default function OverstoryVoice() {
 
           {/* Nav bar */}
           <div style={{
-            width: "100%", flexShrink: 0, marginTop: "20px",
+            width: "100%", flexShrink: 0, marginTop: "40px",
             height: "44px", display: "grid", gridTemplateColumns: "40px 1fr 40px",
             alignItems: "center", padding: "0 20px", boxSizing: "border-box",
             position: "relative", zIndex: 3,
@@ -206,11 +206,11 @@ export default function OverstoryVoice() {
             </div>
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
               <div style={{
-                width: "30px", height: "30px", borderRadius: "50%",
+                width: "38px", height: "38px", borderRadius: "50%",
                 backgroundColor: "#FFFFFF", boxShadow: "0 1px 6px rgba(0,0,0,0.10)",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}>
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#3A3530" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="18" height="18" viewBox="0 0 14 14" fill="none" stroke="#3A3530" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M9.5 2.5L11.5 4.5L4.5 11.5H2.5V9.5L9.5 2.5Z"/>
                   <line x1="8" y1="4" x2="10" y2="6"/>
                 </svg>
