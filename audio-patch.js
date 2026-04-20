@@ -96,9 +96,34 @@
       externalBtn.disabled = true;
       externalBtn.style.opacity = "0.4";
       externalBtn.style.cursor = "not-allowed";
-      startPlayback();
-      var innerBtn = appDiv.querySelector("button");
-      if (innerBtn) innerBtn.click();
+      var imgW = col.firstElementChild;
+      imgW.style.transition = "none";
+      imgW.style.opacity = "0";
+      imgW.style.transform = "translateY(25px)";
+      stage.style.transition = "none";
+      stage.style.opacity = "0";
+      stage.style.transform = "translateY(25px)";
+      waveform.style.transition = "none";
+      waveform.style.opacity = "0";
+      waveform.style.transform = "translateY(25px)";
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          imgW.style.transition = "opacity 450ms ease-out, transform 450ms ease-out";
+          imgW.style.opacity = "1";
+          imgW.style.transform = "translateY(0)";
+          setTimeout(function () {
+            stage.style.transition = "opacity 450ms ease-out, transform 450ms ease-out";
+            stage.style.opacity = "1";
+            stage.style.transform = "translateY(0)";
+            waveform.style.transition = "opacity 450ms ease-out, transform 450ms ease-out";
+            waveform.style.opacity = "1";
+            waveform.style.transform = "translateY(0)";
+            startPlayback();
+            var innerBtn = appDiv.querySelector("button");
+            if (innerBtn) innerBtn.click();
+          }, 150);
+        });
+      });
       audio.addEventListener("ended", function onEnd() {
         externalBtn.disabled = false;
         externalBtn.style.opacity = "1";
@@ -139,10 +164,16 @@
     col.style.marginBottom = "auto";
     col.style.paddingTop = "50px";
     col.firstElementChild.style.marginBottom = "30px";
+    col.firstElementChild.style.opacity = "0";
+    col.firstElementChild.style.transform = "translateY(25px)";
+    stage.style.opacity = "0";
+    stage.style.transform = "translateY(25px)";
+    var reactWaveform = col.nextElementSibling;
+    if (reactWaveform) reactWaveform.style.display = "none";
 
     // Waveform
     var waveform = document.createElement("div");
-    waveform.style.cssText = "position:absolute;bottom:40px;left:24px;right:24px;height:32px;display:flex;align-items:center;justify-content:center;z-index:5;";
+    waveform.style.cssText = "position:absolute;bottom:40px;left:24px;right:24px;height:32px;display:flex;align-items:center;justify-content:center;z-index:5;opacity:0;transform:translateY(25px);";
     var inner = document.createElement("div");
     inner.style.cssText = "position:relative;width:297px;height:32px;";
     waveform.appendChild(inner);
