@@ -69,7 +69,8 @@
       "body{margin:0!important;padding:0!important;background:#1A1A18!important}",
       "#root{margin:0!important;padding:0!important;width:100%!important;min-height:100vh!important;background:#1A1A18!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:32px!important}",
       "#ov-shell>div{min-height:0!important;height:100%!important;overflow:hidden!important;padding-top:0!important;padding-bottom:80px!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:center!important}",
-      "#ov-shell button{display:none!important}"
+      "#ov-shell button{display:none!important}",
+      "[style*='C4B89A']{color:#FCFBF8!important}"
     ].join("");
     document.head.appendChild(styleEl);
 
