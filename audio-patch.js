@@ -96,6 +96,7 @@
       externalBtn.disabled = true;
       externalBtn.style.opacity = "0.4";
       externalBtn.style.cursor = "not-allowed";
+      navBar.style.opacity = "1";
       var imgW = col.firstElementChild;
       imgW.style.transition = "none";
       imgW.style.opacity = "0";
@@ -121,7 +122,7 @@
             startPlayback();
             var innerBtn = appDiv.querySelector("button");
             if (innerBtn) innerBtn.click();
-          }, 150);
+          }, 400);
         });
       });
       audio.addEventListener("ended", function onEnd() {
@@ -141,7 +142,7 @@
 
     // Nav bar — in-flow, prepended to appDiv as first flex child
     var navBar = document.createElement("div");
-    navBar.style.cssText = "width:100%;flex-shrink:0;margin-top:35px;height:44px;display:grid;grid-template-columns:40px 1fr 40px;align-items:center;padding:0 20px;box-sizing:border-box;position:relative;z-index:3;font-family:Georgia,serif;";
+    navBar.style.cssText = "width:100%;flex-shrink:0;margin-top:35px;height:44px;display:grid;grid-template-columns:40px 1fr 40px;align-items:center;padding:0 20px;box-sizing:border-box;position:relative;z-index:3;font-family:Georgia,serif;opacity:0;";
 
     var leftCol = document.createElement("div");
     leftCol.style.cssText = "display:flex;align-items:center;";
