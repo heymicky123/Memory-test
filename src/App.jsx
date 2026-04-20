@@ -25,7 +25,23 @@ export default function App() {
       </div>
       {demo === 1
         ? <OverstoryVoice key={1} />
-        : <OverstoryVoice key={2} image="Ferry_animated.gif" />
+        : <OverstoryVoice
+            key={2}
+            image="Ferry_animated.gif"
+            imageStyle={{
+              marginLeft: "-56px",
+              marginRight: "-56px",
+              padding: "0",
+              marginBottom: "50px",
+            }}
+            imgStyle={{
+              width: "calc(100% + 40px)",
+              marginLeft: "-20px",
+              marginTop: "-20px",
+              marginBottom: "-20px",
+              display: "block",
+            }}
+          />
       }
     </>
   );
