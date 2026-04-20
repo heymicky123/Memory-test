@@ -193,7 +193,7 @@ export default function OverstoryVoice() {
 
           {/* Nav bar */}
           <div style={{
-            width: "100%", flexShrink: 0, marginTop: "40px",
+            width: "100%", flexShrink: 0, marginTop: "35px",
             height: "44px", display: "grid", gridTemplateColumns: "40px 1fr 40px",
             alignItems: "center", padding: "0 20px", boxSizing: "border-box",
             position: "relative", zIndex: 3,
@@ -201,10 +201,10 @@ export default function OverstoryVoice() {
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3A3530" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="11,3 5,9 11,15" />
             </svg>
-            <div style={{ textAlign: "center", fontSize: "18px", fontWeight: 400, color: "#3A3530" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontStyle: "italic", fontWeight: 400, color: "#3A3530" }}>
               Moving to Kirribilli
             </div>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
               <div style={{
                 width: "38px", height: "38px", borderRadius: "50%",
                 backgroundColor: "#FFFFFF", boxShadow: "0 1px 6px rgba(0,0,0,0.10)",
