@@ -119,7 +119,7 @@ export default function OverstoryVoice() {
             rafRef.current = requestAnimationFrame(loop);
           };
           rafRef.current = requestAnimationFrame(loop);
-        }, 800);
+        }, 1400);
         timeoutsRef.current.push(transcriptTimer);
 
         SRT.forEach(({ start, text }, i) => {
@@ -128,7 +128,7 @@ export default function OverstoryVoice() {
             if (i === SRT.length - 1) {
               setTimeout(() => setMode("done"), 1000);
             }
-          }, start + 800);
+          }, start + 1400);
           timeoutsRef.current.push(t);
         });
       });
