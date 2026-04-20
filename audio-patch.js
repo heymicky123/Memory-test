@@ -121,7 +121,7 @@
             startPlayback();
             var innerBtn = appDiv.querySelector("button");
             if (innerBtn) innerBtn.click();
-          }, 800);
+          }, 1400);
         });
       });
       audio.addEventListener("ended", function onEnd() {
