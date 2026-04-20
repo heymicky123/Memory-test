@@ -113,8 +113,8 @@
       img.style.display = "block";
     }
     var imgWrapper = col.firstElementChild;
-    imgWrapper.style.marginLeft = "-56px";
-    imgWrapper.style.marginRight = "-56px";
+    imgWrapper.style.marginLeft = "-17px";
+    imgWrapper.style.marginRight = "-17px";
     imgWrapper.style.padding = "0";
     imgWrapper.style.marginBottom = "50px";
 
