@@ -218,7 +218,7 @@ export default function OverstoryVoice() {
             </div>
           </div>
 
-          <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "420px", boxSizing: "border-box", padding: "40px 32px 0", marginTop: "auto", marginBottom: "auto" }}>
+          <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "420px", boxSizing: "border-box", padding: "50px 32px 0", marginTop: "auto", marginBottom: "auto" }}>
 
             <div style={{ marginBottom: "40px", backgroundColor: "#F2E7DA", padding: "16px" }}>
               <img
