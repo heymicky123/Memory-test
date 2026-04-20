@@ -79,6 +79,7 @@ export default function OverstoryVoice() {
   const prevInnerH = useRef(0);
   const audioRef = useRef(new Audio(`${import.meta.env.BASE_URL}Ferry.m4a`));
   const rafRef = useRef(null);
+  const [animPhase, setAnimPhase] = useState("hidden");
 
   const clearTimeouts = () => {
     timeoutsRef.current.forEach(clearTimeout);
@@ -93,25 +94,39 @@ export default function OverstoryVoice() {
     setProgress(0);
     prevInnerH.current = 0;
     setMode("replaying");
+    setAnimPhase("hidden");
+
     const audio = audioRef.current;
+    audio.pause();
     audio.currentTime = 0;
-    audio.play();
 
-    const loop = () => {
-      if (audio.paused || audio.ended) { rafRef.current = null; return; }
-      setProgress(audio.currentTime / (audio.duration || 1));
-      rafRef.current = requestAnimationFrame(loop);
-    };
-    rafRef.current = requestAnimationFrame(loop);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setAnimPhase("imageIn");
 
-    SRT.forEach(({ start, text }, i) => {
-      const t = setTimeout(() => {
-        setPhrases(prev => [...prev, { text, id: i }]);
-        if (i === SRT.length - 1) {
-          setTimeout(() => setMode("done"), 1000);
-        }
-      }, start);
-      timeoutsRef.current.push(t);
+        const contentTimer = setTimeout(() => {
+          setAnimPhase("contentIn");
+          audio.play();
+
+          const loop = () => {
+            if (audio.paused || audio.ended) { rafRef.current = null; return; }
+            setProgress(audio.currentTime / (audio.duration || 1));
+            rafRef.current = requestAnimationFrame(loop);
+          };
+          rafRef.current = requestAnimationFrame(loop);
+        }, 150);
+        timeoutsRef.current.push(contentTimer);
+
+        SRT.forEach(({ start, text }, i) => {
+          const t = setTimeout(() => {
+            setPhrases(prev => [...prev, { text, id: i }]);
+            if (i === SRT.length - 1) {
+              setTimeout(() => setMode("done"), 1000);
+            }
+          }, start + 150);
+          timeoutsRef.current.push(t);
+        });
+      });
     });
   };
 
@@ -220,7 +235,14 @@ export default function OverstoryVoice() {
 
           <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "420px", boxSizing: "border-box", padding: "50px 32px 0", marginTop: "auto", marginBottom: "auto" }}>
 
-            <div style={{ marginBottom: "30px", backgroundColor: "#F2E7DA", padding: "16px" }}>
+            <div style={{
+              marginBottom: "30px",
+              backgroundColor: "#F2E7DA",
+              padding: "16px",
+              opacity: animPhase === "hidden" ? 0 : 1,
+              transform: animPhase === "hidden" ? "translateY(25px)" : "translateY(0)",
+              transition: animPhase === "hidden" ? "none" : "opacity 450ms ease-out, transform 450ms ease-out",
+            }}>
               <img
                 src={`${import.meta.env.BASE_URL}Memory_test_ferry.gif`}
                 alt=""
@@ -234,6 +256,9 @@ export default function OverstoryVoice() {
                 position: "relative",
                 height: "160px",
                 overflow: "hidden",
+                opacity: animPhase === "contentIn" ? 1 : 0,
+                transform: animPhase === "contentIn" ? "translateY(0)" : "translateY(25px)",
+                transition: animPhase === "contentIn" ? "opacity 450ms ease-out, transform 450ms ease-out" : "none",
               }}
             >
               <div style={{
@@ -299,6 +324,9 @@ export default function OverstoryVoice() {
             position: "absolute", bottom: "40px", left: "24px", right: "24px",
             height: "32px", display: "flex", alignItems: "center",
             justifyContent: "center", zIndex: 5,
+            opacity: animPhase === "contentIn" ? 1 : 0,
+            transform: animPhase === "contentIn" ? "translateY(0)" : "translateY(25px)",
+            transition: animPhase === "contentIn" ? "opacity 450ms ease-out, transform 450ms ease-out" : "none",
           }}>
             <div style={{ position: "relative", width: "297px", height: "32px" }}>
               {BAR_HEIGHTS.map((h, i) => (
