@@ -22,6 +22,15 @@
   var rafId = null;
   var externalBtn = null;
 
+  function hidePlaceholder() {
+    var divs = document.querySelectorAll("div");
+    for (var i = 0; i < divs.length; i++) {
+      if (divs[i].textContent.trim() === "Speak a memory\u2026") {
+        divs[i].style.display = "none";
+      }
+    }
+  }
+
   function startPlayback() {
     audio.currentTime = 0;
     audio.play().catch(function () {});
@@ -50,6 +59,7 @@
     for (var i = 0; i < btns.length; i++) {
       if (btns[i].textContent.trim() === "Export \u2192") btns[i].style.display = "none";
     }
+    hidePlaceholder();
   });
   observer.observe(document.body, { childList: true, subtree: true });
 
@@ -72,6 +82,8 @@
       "#ov-shell button{display:none!important}"
     ].join("");
     document.head.appendChild(styleEl);
+
+    hidePlaceholder();
 
     externalBtn = document.createElement("button");
     externalBtn.textContent = "Demo";
