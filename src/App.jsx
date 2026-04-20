@@ -29,8 +29,8 @@ export default function App() {
             key={2}
             image="Ferry_animated.gif"
             imageStyle={{
-              marginLeft: "-56px",
-              marginRight: "-56px",
+              marginLeft: "-17px",
+              marginRight: "-17px",
               padding: "0",
               marginBottom: "50px",
             }}
