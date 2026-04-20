@@ -104,11 +104,12 @@
     navBar.style.cssText = "width:100%;flex-shrink:0;margin-top:35px;height:44px;display:grid;grid-template-columns:40px 1fr 40px;align-items:center;padding:0 20px;box-sizing:border-box;position:relative;z-index:3;font-family:Georgia,serif;";
 
     var leftCol = document.createElement("div");
-    leftCol.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3A3530" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="11,3 5,9 11,15"/></svg>';
+    leftCol.style.cssText = "display:flex;align-items:center;";
+    leftCol.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3A3530" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px"><polyline points="11,3 5,9 11,15"/></svg>';
     navBar.appendChild(leftCol);
 
     var titleCol = document.createElement("div");
-    titleCol.style.cssText = "display:flex;align-items:center;justify-content:center;font-size:16px;font-style:italic;font-weight:400;color:#3A3530;font-family:Georgia,serif;";
+    titleCol.style.cssText = "display:flex;align-items:center;justify-content:center;font-size:18px;font-style:italic;font-weight:400;color:#3A3530;font-family:Georgia,serif;";
     titleCol.textContent = "Moving to Kirribilli";
     navBar.appendChild(titleCol);
 
