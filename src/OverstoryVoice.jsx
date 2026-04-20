@@ -198,10 +198,10 @@ export default function OverstoryVoice() {
             alignItems: "center", padding: "0 20px", boxSizing: "border-box",
             position: "relative", zIndex: 3,
           }}>
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3A3530" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3A3530" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: "2px" }}>
               <polyline points="11,3 5,9 11,15" />
             </svg>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", fontStyle: "italic", fontWeight: 400, color: "#3A3530" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", fontStyle: "italic", fontWeight: 400, color: "#3A3530" }}>
               Moving to Kirribilli
             </div>
             <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
