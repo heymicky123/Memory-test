@@ -68,7 +68,7 @@ const BAR_HEIGHTS = (() => {
   });
 })();
 
-export default function OverstoryVoice() {
+export default function OverstoryVoice({ image = "Memory_test_ferry.gif", imageStyle = {} }) {
   const [phrases, setPhrases] = useState([]);
   const [mode, setMode] = useState("idle");
   const [offsetY, setOffsetY] = useState(0);
@@ -245,12 +245,13 @@ export default function OverstoryVoice() {
               marginBottom: "30px",
               backgroundColor: "#F2E7DA",
               padding: "16px",
+              ...imageStyle,
               opacity: animPhase === "hidden" ? 0 : 1,
               transform: animPhase === "hidden" ? "translateY(25px)" : "translateY(0)",
               transition: animPhase === "hidden" ? "none" : "opacity 450ms ease-out, transform 450ms ease-out",
             }}>
               <img
-                src={`${import.meta.env.BASE_URL}Memory_test_ferry.gif`}
+                src={`${import.meta.env.BASE_URL}${image}`}
                 alt=""
                 style={{ width: "100%", display: "block" }}
               />
