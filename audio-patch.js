@@ -121,7 +121,7 @@
 
     col.style.marginTop = "auto";
     col.style.marginBottom = "auto";
-    col.style.paddingTop = "40px";
+    col.style.paddingTop = "50px";
 
     // Waveform
     var waveform = document.createElement("div");
