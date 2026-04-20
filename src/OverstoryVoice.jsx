@@ -114,7 +114,7 @@ export default function OverstoryVoice() {
             rafRef.current = requestAnimationFrame(loop);
           };
           rafRef.current = requestAnimationFrame(loop);
-        }, 150);
+        }, 400);
         timeoutsRef.current.push(contentTimer);
 
         SRT.forEach(({ start, text }, i) => {
@@ -123,7 +123,7 @@ export default function OverstoryVoice() {
             if (i === SRT.length - 1) {
               setTimeout(() => setMode("done"), 1000);
             }
-          }, start + 150);
+          }, start + 400);
           timeoutsRef.current.push(t);
         });
       });
@@ -212,6 +212,7 @@ export default function OverstoryVoice() {
             height: "44px", display: "grid", gridTemplateColumns: "40px 1fr 40px",
             alignItems: "center", padding: "0 20px", boxSizing: "border-box",
             position: "relative", zIndex: 3,
+            opacity: animPhase === "hidden" ? 0 : 1,
           }}>
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3A3530" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: "2px" }}>
               <polyline points="11,3 5,9 11,15" />
