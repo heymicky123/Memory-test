@@ -104,8 +104,13 @@ export default function OverstoryVoice() {
       requestAnimationFrame(() => {
         setAnimPhase("imageIn");
 
-        const contentTimer = setTimeout(() => {
-          setAnimPhase("contentIn");
+        const waveformTimer = setTimeout(() => {
+          setAnimPhase("waveformIn");
+        }, 400);
+        timeoutsRef.current.push(waveformTimer);
+
+        const transcriptTimer = setTimeout(() => {
+          setAnimPhase("transcriptIn");
           audio.play();
 
           const loop = () => {
@@ -114,8 +119,8 @@ export default function OverstoryVoice() {
             rafRef.current = requestAnimationFrame(loop);
           };
           rafRef.current = requestAnimationFrame(loop);
-        }, 400);
-        timeoutsRef.current.push(contentTimer);
+        }, 800);
+        timeoutsRef.current.push(transcriptTimer);
 
         SRT.forEach(({ start, text }, i) => {
           const t = setTimeout(() => {
@@ -123,7 +128,7 @@ export default function OverstoryVoice() {
             if (i === SRT.length - 1) {
               setTimeout(() => setMode("done"), 1000);
             }
-          }, start + 400);
+          }, start + 800);
           timeoutsRef.current.push(t);
         });
       });
@@ -257,9 +262,7 @@ export default function OverstoryVoice() {
                 position: "relative",
                 height: "160px",
                 overflow: "hidden",
-                opacity: animPhase === "contentIn" ? 1 : 0,
-                transform: animPhase === "contentIn" ? "translateY(0)" : "translateY(25px)",
-                transition: animPhase === "contentIn" ? "opacity 450ms ease-out, transform 450ms ease-out" : "none",
+                opacity: animPhase === "transcriptIn" ? 1 : 0,
               }}
             >
               <div style={{
@@ -325,9 +328,9 @@ export default function OverstoryVoice() {
             position: "absolute", bottom: "40px", left: "24px", right: "24px",
             height: "32px", display: "flex", alignItems: "center",
             justifyContent: "center", zIndex: 5,
-            opacity: animPhase === "contentIn" ? 1 : 0,
-            transform: animPhase === "contentIn" ? "translateY(0)" : "translateY(25px)",
-            transition: animPhase === "contentIn" ? "opacity 450ms ease-out, transform 450ms ease-out" : "none",
+            opacity: (animPhase === "waveformIn" || animPhase === "transcriptIn") ? 1 : 0,
+            transform: (animPhase === "waveformIn" || animPhase === "transcriptIn") ? "translateY(0)" : "translateY(25px)",
+            transition: animPhase === "waveformIn" ? "opacity 450ms ease-out, transform 450ms ease-out" : "none",
           }}>
             <div style={{ position: "relative", width: "297px", height: "32px" }}>
               {BAR_HEIGHTS.map((h, i) => (
